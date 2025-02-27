@@ -42,7 +42,7 @@ Err inputel(int *p){
 	*p = s;
 	return OK;
 }
-Err inputmat(Mat** mat){
+Err inputmat(Mat* mat){
 	int s;
 	int k;
 	int el;
@@ -50,31 +50,22 @@ Err inputmat(Mat** mat){
     if(inputn(&s)==CLOSE){
         return CLOSE;
     }
-    (*mat)->lines = calloc(s, sizeof(Mat));
-    (*mat)->l = s;
+    (mat)->lines = calloc(s, sizeof(Line));
+    (mat)->l = s;
     for(int i = 0; i<s; i++){
 	    printf("Введите число элементов %d-ой строки: ", i+1);
         if(inputn(&k)==CLOSE){
         	return CLOSE;
         }
-        (((*mat)->lines)+i)->n = k;
-        (((*mat)->lines)+i)->a = calloc(k, sizeof(int));
+        (((mat)->lines)+i)->n = k;
+        (((mat)->lines)+i)->a = calloc(k, sizeof(int));
        	for(int j = 0; j<k;j++){
        		printf("Введите элемент %d: ", j+1);
        		if(inputel(&el)==CLOSE){
        			return CLOSE;
        		}
-       		((((*mat)->lines)+i)->a)[j] = el;
+       		((((mat)->lines)+i)->a)[j] = el;
        	}
 	}
 	return OK;
-}
-void printmat(Mat* mat){
-	for(int i = 0; i<(mat->l);i++){
-		printf("%d строка:\n[", i+1);
-		for(int j = 0; j<((mat)->lines+i)->n-1; j++){
-			printf("%d, ", ((mat->lines+i)->a)[j]);
-		}
-		printf("%d]\n", ((mat->lines+i)->a)[(mat->lines+i)->n-1]);
-	}
 }

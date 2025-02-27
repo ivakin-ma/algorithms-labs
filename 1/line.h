@@ -6,4 +6,7 @@ typedef struct Line{
 	int n;
 	int *a;
 }Line;
+void printline(Line*);
+void freeline(Line*);
+void processline(Line*);
 #endif
