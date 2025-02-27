@@ -2,7 +2,7 @@
 void freeline(Line *line){
 	free(line->a);
 }
-void printline(Line *line){
+void printline(const Line *line){
 	for(int i = 0; i<line->n-1; i++){
 		printf("%d, ", line->a[i]);
 	}

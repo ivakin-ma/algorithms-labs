@@ -7,8 +7,8 @@ typedef struct Mat{
 	int l;
 	Line *lines;
 }Mat;
-void printmat(Mat*);
+void printmat(const Mat*);
 void freemat(Mat*);
 void process(Mat*);
-void copymat(Mat*, Mat*);
+void copymat(const Mat*, Mat*);
 #endif

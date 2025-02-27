@@ -1,5 +1,5 @@
 #include"mat.h"
-void printmat(Mat *mat){
+void printmat(const Mat *mat){
 	for(int i = 0; i<mat->l; i++){
 		printf("%d строка: [", i+1);
 		printline(mat->lines+i);
@@ -17,7 +17,7 @@ void process(Mat *mat){
 		processline(mat->lines+i);
 	}
 }
-void copymat(Mat *mat1, Mat *mat2){
+void copymat(const Mat *mat1, Mat *mat2){
 	mat2->lines = calloc(mat1->l, sizeof(Line));
 	mat2->l = mat1->l;
 	for(int i = 0 ; i<mat1->l; i++){
