@@ -7,6 +7,5 @@ typedef enum Err{
 	CLOSE
 }Err;
 Err inputn(int*);
-Err inputmat(Mat**);
-void printmat(Mat*);
+Err inputmat(Mat*);
 #endif
