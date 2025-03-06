@@ -1,5 +1,5 @@
 #include"bin.h"
-Err binprocess(FILE *f, long unsigned int pswd){
+Err binprocess(opis *op){
 	int n;
 	long unsigned int pas;
 	unsigned int adr1;
@@ -10,6 +10,8 @@ Err binprocess(FILE *f, long unsigned int pswd){
 	int itc;
 	int jt = -1;
 	int jtc;
+	FILE *f = op->name;
+	long unsigned int pswd = op->pswd;
 	fseek(f, 0, SEEK_SET);
 	fread(&pas, sizeof(long unsigned int), 1, f);
 	if(pas != pswd){

@@ -12,7 +12,10 @@ int main(){
         char *name;
         name = readline("Введите название файла: ");
         FILE *f = fopen(name, "rb");
-        binprocess(f, pswd);
+        opis *op = calloc(1, sizeof(opis));
+        op->name = f;
+        op->pswd = pswd;
+        binprocess(op);
         // creator(f, pswd, mat);
         // freemat(mat);
 }

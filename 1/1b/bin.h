@@ -4,9 +4,9 @@
 #include"mat.h"
 #include"inputout.h"
 typedef struct opis{
-	char *name;
+	FILE *name;
 	long unsigned int pswd;
 }opis;
-Err binprocess(FILE *, long unsigned int);
+Err binprocess(opis *);
 Err creator(FILE *, long unsigned int, Mat *);
 #endif
