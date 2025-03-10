@@ -7,6 +7,14 @@ typedef struct opis{
 	FILE *name;
 	long unsigned int pswd;
 }opis;
+typedef struct bintype{
+	FILE *name;
+	long unsigned int pswd;
+	int len;
+	unsigned int *add;
+	int count;
+	int *line;
+}bintype;
 Err binprocess(opis *);
-Err creator(FILE *, long unsigned int, Mat *);
+Err creator(bintype *t);
 #endif

@@ -45,22 +45,13 @@ Err binprocess(opis *op){
 		}
 	}
 }
-Err creator(FILE *f,long unsigned int pswd, Mat *mat){ //вспомогательная функция для создания бинарного файла
-	fwrite(&pswd, sizeof(long unsigned int), 1, f);
-	fwrite(&(mat->l), sizeof(int), 1, f);
-	unsigned int add = 4 + 8 * mat->l;
-	for(int i = 0; i<mat->l; i++){
-		fwrite(&add, sizeof(unsigned int), 1, f);
-		add += 4 * ((mat->lines+i)->n+1);
-		if(add==4294967295){
-			printf("Целлочисленное переполнение.\n");
-			return CLOSE;
-		}
+Err creator(bintype *t){ //вспомогательная функция для создания бинарного файла
+	fwrite(&(t->pswd), sizeof(long unsigned int), 1, t->name);
+	fwrite(&(t->len), sizeof(int), 1, t->name);
+	for(int i = 0; i<t->len; i++){
+		fwrite(&(t->add[i]), sizeof(unsigned int), 1, t->name);
 	}
-	for(int i =0; i<mat->l; i++){
-		fwrite(&((mat->lines+i)->n), sizeof(int), 1, f);
-		for(int j = 0; j<(mat->lines+i)->n; j++){
-			fwrite(&((mat->lines+i)->a[i]), sizeof(int), 1, f);
-		}
+	for(int i =0; i<t->count; i++){
+		fwrite(&(t->line[i]), sizeof(int), 1, t->name);
 	}
 }
