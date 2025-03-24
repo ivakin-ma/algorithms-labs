@@ -8,6 +8,7 @@ int main(int argc, char *argv[]){
 		printf("Введено слишком много ключей.");
 		return 0;
 	}
+	int ans;
 	switch (sp){
 		case 'a':
 			int n;
@@ -20,9 +21,13 @@ int main(int argc, char *argv[]){
 				free(s);
 				return 0;
 			}
-			int ans = process(s, n-1);
+			ans = processa(s, n-1);
 			printf("%d\n", ans);
 		case 'b':
-			//
+			node *top = calloc(1, sizeof(node));
+			top->prev = NULL;
+			myreadsp(&top);
+			ans = processb(top);
+			printf("%d\n", ans);
 	}
 }

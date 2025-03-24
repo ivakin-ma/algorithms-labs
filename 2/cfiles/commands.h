@@ -4,6 +4,10 @@
 #include<stdlib.h>
 #include<stdio.h>
 #define CHARSET_NUM "0123456789"
-int process(char *, int);
-int intlen(int);
+typedef struct node{
+	struct node *prev;
+	char value;
+} node;
+int processa(char *, int);
+int processb(node *);
 #endif

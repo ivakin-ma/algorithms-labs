@@ -48,7 +48,6 @@ Err inputn(int *p){
 	return OK;
 }
 Err myreadvc(char *s, int n){
-	scanf("%*c");
 	printf("Введите строку:\n");
 	char a = '\0';
 	int c = 0;
@@ -62,8 +61,37 @@ Err myreadvc(char *s, int n){
 			printf("Введен некорректный символ.\n");
 			return CLOSE;
 		}
+		if(a == EOF){
+			scanf("%*c");
+			printf("Выход из программы...\n");
+			return CLOSE;
+		}
 		s[c] = a;
 		c++;
+	}
+	printf("Ввод выполнен.\n");
+}
+Err myreadsp(node **top){
+	printf("Введите строку:\n");
+	char a = '\0';
+	while(a!='\n'){
+		a = getchar();
+		if(strstr(&a, "0123456789+-/*")){
+			printf("Введен некорректный символ.\n");
+			return CLOSE;
+		}
+		if(a==EOF){
+			scanf("%*c");
+			printf("Выход из программы...\n");
+			return CLOSE;
+		}
+		node *temp = calloc(1, sizeof(node));
+		(*top)->value = a;
+		temp->prev = *top;
+		*top = temp;
+	}
+	while((*top)->value=='\0'||(*top)->value=='\n'){
+		(*top) = (*top)->prev;
 	}
 	printf("Ввод выполнен.\n");
 }
