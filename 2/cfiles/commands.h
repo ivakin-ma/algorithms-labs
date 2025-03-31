@@ -10,4 +10,5 @@ typedef struct node{
 } node;
 int processa(char *, int);
 int processb(node *);
+void freenode(node *);
 #endif

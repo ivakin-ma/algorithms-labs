@@ -73,3 +73,11 @@ int processb(node *top){
 	free(a);
 	return res;
 }
+void freenode(node *top){
+	node *temp;
+	while(top){
+		temp = top->prev;
+		free(top);
+		top = temp;
+	}
+}

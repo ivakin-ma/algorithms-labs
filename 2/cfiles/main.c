@@ -3,9 +3,9 @@
 #include<stdlib.h>
 #include<unistd.h>
 int main(int argc, char *argv[]){
-	int sp = getopt(argc, argv, "ab");
-	if(getopt(argc, argv, "ab")!=-1){
-		printf("Введено слишком много ключей.");
+	int sp;
+	if((sp = getopt(argc, argv, "ab"))==-1){
+		printf("Введено слишком мало ключей.");
 		return 0;
 	}
 	int ans;
@@ -16,18 +16,22 @@ int main(int argc, char *argv[]){
 			if(inputn(&n)==CLOSE){
 				return 0;
 			}
-			char *s = calloc(n, sizeof(char));
+			char *s = calloc(n+1, sizeof(char));
 			if(myreadvc(s, n)==CLOSE){
 				free(s);
 				return 0;
 			}
 			ans = processa(s, n-1);
-			printf("%d\n", ans);
+			printf("Ans: %d\n", ans);
+			free(s);
+			return 0;
 		case 'b':
 			node *top = calloc(1, sizeof(node));
 			top->prev = NULL;
 			myreadsp(&top);
 			ans = processb(top);
-			printf("%d\n", ans);
+			printf("Ans: %d\n", ans);
+			freenode(top);
+			return 0;
 	}
 }
