@@ -19,6 +19,10 @@ Err init(stack **a){
 			return CLOSE;
 		}
 	}
+	if(getchar()!='\n'){
+		printf("Переполнение.");
+		return CLOSE;
+	}
 }
 Err add(stack **a){
 	char c = getchar();
@@ -63,7 +67,7 @@ int process(stack *head){
 		}
 	}
 	int res = a[0];
-	//free(a);
+	free(a);
 	return res;
 }
 
