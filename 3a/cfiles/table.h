@@ -1,15 +1,18 @@
 #ifndef TABLE_H
 #define TABLE_H
 #include"keyspace.h"
-#include"inputout.h"
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
 typedef struct Table{
 	struct KeySpace *ks;
 } Table;
-Err add(Table *);
-Err del(Table *, KeyType *);
-Err search(Table *, KeyType *);
+void add(Table **a, KeyType *, KeyType *, InfoType *);
+void del(Table *, KeyType *);
+KeySpace *search(Table *, KeyType *);
 void print_table(Table *);
-Err import(Table *, FILE *);
-Table *search_pro(Table *);
+void import(Table *, FILE *f);
+Table *search_pro(Table *, KeyType *, KeyType *);
+void del_pro(Table *, KeyType *);
 void freetable(Table *);
 #endif
