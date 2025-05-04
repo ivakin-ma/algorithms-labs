@@ -63,45 +63,66 @@ Err inputsp(int *p){
 	        scanf("%*[^\n]");
 	        continue;
 	    }
-	    if(s<1||s>5){
+	    if(s<1||s>7){
 	        printf("Введено некорректное значение.\n");
 	        scanf("%*[^\n]");
 	        continue;
 	    }
-	}while(v!=1||s<1||s>5);
+	}while(v!=1||s<1||s>7);
 	*p = s;
 	return OK;
 }
-Err inputkey(Table *t, KeyType **key){
+Err inputkey(Table *t, KeyType *key){
 	do{
-		(*key)->s = readline("Введите ключ элемента: ");
-		if((*key)->s==NULL){
+		key->s = readline("Введите ключ элемента: ");
+		if(key->s==NULL){
 			printf("Выход из программы...");
 			return ERROR;
 		}
-		if(*(*key)->s=='\0'){
+		if(*key->s=='\0'){
 			printf("Ключ не может быть нулевым.\n");
+			continue;
 		}
 		if((t!=NULL)&&(search(t, *key)!=NULL)){
 			printf("Этот ключ уже занят.\n");
+			continue;
 		}
-	}while(*(*key)->s=='\0'||(t!=NULL&&(search(t, *key)!=NULL)));
+	}while(*key->s=='\0'||(t!=NULL&&(search(t, *key)!=NULL)));
 	return OK;
 }
-Err inputpar(Table *t, KeyType **key){
+Err inputpar(Table *t, KeyType *key){
 	do{
-		(*key)->s = readline("Введите ключ родительского элемента: ");
-		if((*key)->s==NULL){
+		key->s = readline("Введите ключ родительского элемента: ");
+		if(key->s==NULL){
 			printf("Выход из программы...");
 			return ERROR;
 		}
-		if(*(*key)->s=='\0'){
-			(*key)->s = NULL;
+		if(*key->s=='\0'){
+			free(key->s);
+			key->s = NULL;
 			return OK;
 		}
 		if((t!=NULL)&&(search(t, *key)==NULL)){
 			printf("Такого ключа нет.\n");
+			continue;
 		}
-	}while(search(t, *key)==NULL);
+	}while(t!=NULL&&search(t, *key)==NULL);
+	return OK;
+}
+Err inputdel(Table *t, KeyType *key){
+	do{
+		key->s = readline("Введите ключ удаляемого элемента: ");
+		if(key->s==NULL){
+			printf("Выход из программы...");
+			return ERROR;
+		}
+		if(*key->s=='\0'){
+			printf("Ключ не может быть нулевым.");
+			continue;
+		}
+		if((search(t, *key)==NULL)){
+			printf("Такого ключа нет.\n");
+		}
+	}while(search(t, *key)==NULL||*key->s=='\0');
 	return OK;
 }

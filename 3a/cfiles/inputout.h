@@ -13,7 +13,8 @@ typedef enum Err{
 }Err;
 Err inputn(int *);
 Err inputsp(int *);
-Err inputkey(Table *, KeyType **);
-Err inputpar(Table *, KeyType **);
+Err inputkey(Table *, KeyType *);
+Err inputpar(Table *, KeyType *);
 Err inputinfo(unsigned int *);
+Err inputdel(Table*, KeyType *);
 #endif
