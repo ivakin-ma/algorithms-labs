@@ -23,7 +23,7 @@ Err inputn(int *p){
 	*p = s;
 	return OK;
 }
-Err inputinfo(unsigned int *p){
+Err inputinfo(InfoType *info){
 	long long int s = 0;
 	int v = 0;
 	do{
@@ -45,7 +45,7 @@ Err inputinfo(unsigned int *p){
 	        continue;
 	    }
 	}while(v!=1||s<1||s>UINT_MAX);
-	*p = (unsigned int) s;
+	info->a = (unsigned int) s;
 	return OK;
 }
 Err inputsp(int *p){
@@ -63,7 +63,7 @@ Err inputsp(int *p){
 	        scanf("%*[^\n]");
 	        continue;
 	    }
-	    if(s<1||s>7){
+	    if(s<1||s>6){
 	        printf("Введено некорректное значение.\n");
 	        scanf("%*[^\n]");
 	        continue;
@@ -88,25 +88,6 @@ Err inputkey(Table *t, KeyType *key){
 			continue;
 		}
 	}while(*key->s=='\0'||(t!=NULL&&(search(t, *key)!=NULL)));
-	return OK;
-}
-Err inputpar(Table *t, KeyType *key){
-	do{
-		key->s = readline("Введите ключ родительского элемента: ");
-		if(key->s==NULL){
-			printf("Выход из программы...");
-			return ERROR;
-		}
-		if(*key->s=='\0'){
-			free(key->s);
-			key->s = NULL;
-			return OK;
-		}
-		if((t!=NULL)&&(search(t, *key)==NULL)){
-			printf("Такого ключа нет.\n");
-			continue;
-		}
-	}while(t!=NULL&&search(t, *key)==NULL);
 	return OK;
 }
 Err inputdel(Table *t, KeyType *key){

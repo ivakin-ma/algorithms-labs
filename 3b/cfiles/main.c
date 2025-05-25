@@ -1,14 +1,15 @@
-#include"table.h"
 #include"inputout.h"
 int main(){
 	int sp;
 	Table *a = NULL;
 	KeySpace *searched;
 	KeyType temp;
+	char *filename;
+	FILE *f;
 	while(1){
 		printf("============Меню============\n1. Добавление элемента в таблицу.\n2. Удаление элемента из таблицы.\n");
-		printf("3. Вывод таблицы.\n4. Импорт таблицы из текстового файла.\n5. Поиск элементов по диапазону родительского ключа.\n");
-		printf("6. Продвинутое удаление.\n7. Завершение программы.\n");
+		printf("3. Вывод таблицы.\n4. Импорт таблицы из бинарного файла.\n");
+		printf("5. Вывод таблицы в бинарный файл.\n6. Завершение программы.\n");
 		if(inputsp(&sp)==ERROR){
 			return 0;
 		}
@@ -19,21 +20,20 @@ int main(){
 					freetable(a);
 					return 0;
 				}
-				KeyType par;
-				if(inputpar(a, &par)==ERROR){
-					free(key.s);
-					freetable(a);
-					return 0;
-				}
 				InfoType *info = calloc(1, sizeof(InfoType));
-				if(inputinfo(&(info->a))==ERROR){
+				if(inputinfo(info)==ERROR){
 					freetable(a);
 					free(key.s);
-					free(par.s);
 					free(info);
 					return 0;
 				}
-				add(&a, key, par, info);
+				add(&a, hash(key.s), key, info);
+				if(a==NULL){
+					printf("Переполнение.\n");
+					free(key.s);
+					free(info);
+					return 0;
+				}
 				continue;
 			case 2:
 				if(a==NULL){
@@ -42,6 +42,9 @@ int main(){
 				}
 				if(inputdel(a, &temp)==ERROR){
 					printf("Выход из программы...\n");
+					if(temp.s){
+						free(temp.s);
+					}
 					freetable(a);
 					return 0;
 				}
@@ -57,73 +60,47 @@ int main(){
 				print_table(a);
 				continue;
 			case 4:
-		        if(a!=NULL){
-		        		freetable(a);
-		                printf("Таблица уже инициализированна.\n");
-		                return 0;
-		        }
-		        char *name = readline("Введите название файла: ");
-		        if(name==NULL){
-		        	freetable(a);
-		        	printf("Выход из программы...");
-		        	return 0;
-		        }
-		        FILE *f = fopen(name, "r");
-		        free(name);
-		        if(f==NULL){
-		                printf("Ошибка файла.\n");
-		                continue;
-		        }
-		        a = calloc(1, sizeof(Table));
-		        import(a, f);
-		        continue;
-			case 5:
-				if(a==NULL){
-					printf("Таблица еще не инициализированна.\n");
+				if(a!=NULL){
+					printf("Таблица уже инициализированна.\n");
 					continue;
 				}
-				KeyType gran1;
-				if(inputkey(NULL, &gran1)==ERROR){
-					freetable(a);
+				filename = readline("Введите имя файла:\n");
+				if(!filename){
+					printf("Выход из программы...\n");
 					return 0;
-				}
-				KeyType gran2;
-				if(inputkey(NULL, &gran2)==ERROR){
-					free(gran1.s);
-					freetable(a);
-					return 0;
-				}
-				Table *b;
-				if(strcmp(gran1.s, gran2.s)==1){
-					b = search_pro(a, gran2, gran1);
 				}else{
-					b = search_pro(a, gran1, gran2);
+					f = fopen(filename, "rb");
+					if(f==NULL){
+						printf("Название неверно.\n");
+						free(filename);
+						return 0;
+					}
 				}
-				free(gran1.s);
-				free(gran2.s);
-				if(b->ks==NULL){
-					printf("Элементы не найдены.\n");
-				}else{
-					print_table(b);
-				}
-				freetable(b);
+				bin_import(&a, f);
+				free(filename);
 				continue;
-			case 6:
+			case 5:
 				if(a==NULL){
 				    printf("Таблица не инициализированна.\n");
 				    continue;
 				}
-				KeyType temp;
-				if(inputdel(a, &temp)==ERROR){
-				    printf("Выход из программы...\n");
-				    freetable(a);
-				    return 0;
+				filename = readline("Введите имя файла:\n");
+				if(!filename){
+					printf("Выход из программы...\n");
+					return 0;
+				}else{
+					f = fopen(filename, "wb");
+					if(f==NULL){
+						printf("Название неверно.\n");
+						free(filename);
+						return 0;
+					}
 				}
-				searched = search(a, temp);
-				del_pro(a, searched->key);
-				free(temp.s);
+				bin_export(a, f);
+				printf("Экспорт выполнен.\n");
+				free(filename);
 				continue;
-			case 7:
+			case 6:
 				freetable(a);
 				printf("Выход из программы...\n");
 				return 0;

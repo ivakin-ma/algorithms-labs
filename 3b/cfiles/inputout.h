@@ -6,14 +6,9 @@
 #include<limits.h>
 #include<readline/readline.h>
 #include"table.h"
-typedef enum Err{
-        OK,
-        ERROR
-}Err;
 Err inputn(int *);
 Err inputsp(int *);
 Err inputkey(Table *, KeyType *);
-Err inputpar(Table *, KeyType *);
-Err inputinfo(unsigned int *);
+Err inputinfo(InfoType *);
 Err inputdel(Table*, KeyType *);
 #endif
