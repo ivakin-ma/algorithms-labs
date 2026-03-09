@@ -1,0 +1,38 @@
+{
+   glibc-set_robust_list
+   Memcheck:Param
+   set_robust_list(head)
+   fun:__tls_init_tp
+   ...
+}
+{
+   glibc-malloc-uninit
+   Memcheck:Cond
+   fun:malloc
+   fun:_dl_get_origin
+   ...
+}
+{
+   glibc-scanf-uninit
+   Memcheck:Cond
+   fun:__libc_cleanup_push_defer
+   fun:__vfscanf_internal
+   ...
+}
+{
+   glibc-set_robust_list
+   Memcheck:Param
+   Conditional jump or move depends on uninitialised value(s)
+   fun:malloc
+   ...
+}
+// {
+//    glibc-malloc-init
+//    Memcheck:Cond
+//    fun:_int_malloc
+//    fun:tcache_init.part.0
+//    fun:malloc
+//    fun:_dl_get_origin
+//    obj:/lib*/libc.so.*
+//    obj:*libc.a
+// }

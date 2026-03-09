@@ -23,7 +23,9 @@ Err init(stack **a){
 		printf("Переполнение.");
 		return CLOSE;
 	}
+	return OK;
 }
+
 Err add(stack **a){
 	char c = getchar();
 	if(c == EOF){
@@ -37,7 +39,9 @@ Err add(stack **a){
 		return OK;
 	}
 	(*a)->s[strlen((*a)->s)] = c;
+	return OK;
 }
+
 int process(stack *head){
 	int size = strlen(head->s);
 	int *a = calloc(size, sizeof(int));
